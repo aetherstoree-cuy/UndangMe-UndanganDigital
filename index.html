@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/img/icon.png">
+<title>UndangMe – Undangan Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--NAVBAR-->
+<header>
+  <div class="wrap">
+    <a class="logo" href="/"><img src="img/logo.png" alt="Moment Kita"></a>
+    <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
+      <span>
+      </span>
+      <span>
+      </span>
+      <span>
+      </span>
+    </button>
+    <nav id="nav">
+      <a href="#tema">Tema</a>
+      <a href="#harga">Harga</a>
+      <a href="#cara">Cara order</a>
+
+      <!--
+       <a href="#testimoni">Testimoni</a> 
+       -->
+
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+<!--NAVBAR END-->
+
+<!--HERO SECTION-->
+<main class="wrap">
+<div class="hero">
+  <div>
+    <h1>Rangkai kisah cinta kalian menjadi undangan yang berkesan</h1>
+    <p>Pilih desain yang sesuai dengan kamu, lengkapi dengan detail acara, lalu bagikan undangan kepada keluarga dan sahabat kamu dengan mudah.</p>
+    <div class="cta">
+    <a class="btn" data-wa="Halo Kak, Aku mau tanya soal undangan digital ini." href="#">
+      <i class="bi bi-whatsapp" style="margin-right: 3px;"></i>Hubungi Kami</a>
+    <a class="btn o" href="#tema">Lihat tema</a></div>
+  </div>
+  <div class="preview">
+    <div class="phone"><div class="cp" style="background:linear-gradient(160deg,#F6DDE0,#E6C6D3);color:#4A1630"><small>The Wedding of</small><b>Alif &amp; Kirana</b><i>Sabtu, 12 September 2026</i><span>Buka undangan</span></div></div>
+    <div class="feat">
+      <ul>
+        <li class="box"><h3><i class="bi bi-music-note-beamed" style="margin-right: 5px;"></i>Musik</h3><p>Setiap tema dilengkapi musik yang bisa kamu sesuaikan.</p></li>
+        <li class="box"><h3><i class="bi bi-map" style="margin-right: 5px;"></i>Peta & Hitung Mundur</h3><p>Lokasi acara terhubung langsung ke Google Maps, lengkap dengan hitung mundur waktu nyata.</p></li>
+        <li class="box"><h3><i class="bi bi-calendar-check" style="margin-right: 5px;"></i>RSVP & Buku Tamu Digital</h3><p>Tamu dapat mengonfirmasi kehadiran dan menuliskan doa langsung dari undangan.</p></li>
+        <li class="box"><h3><i class="bi bi-envelope" style="margin-right: 5px;"></i>Amplop Digital</h3><p>Terima hadiah lewat transfer bank atau e-wallet.</p></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="stats">
+  <div>
+    <b><i class="bi bi-book"></i></b>
+    <span>400+ Tema Undangan Digital Premium</span>
+  </div>
+  <div>
+  <b><i class="bi bi-pencil"></i></b>
+  <span>Bisa Revisi dan Ganti Tema Sampai Hari H</span>
+</div>
+  <div>
+<b><i class="bi bi-clock"></i></b>
+  <span>Pembuatan Undangan Relatif Cepat</span>
+</div>
+<div>
+  <b><i class="bi bi-infinity"></i></b>
+  <span>Undangan Digital Tanpa Masa Aktif</span>
+</div>
+</div>
+<!--HERO SECTION END-->
+
+<!--THEMES SECTION-->
+<section id="tema">
+  <h2>Pilihan Tema Terbaik</h2>
+  <p class="sub">Tersedia 400+ Tema Undangan yang Mewah, Hubungi Kami Untuk Melihat Tema Lainnya.</p>
+  <div class="chips" id="chips" role="group" aria-label="Filter kategori"></div>
+  <div class="grid" id="grid"></div>
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn o" id="moreThemes" type="button" hidden>Lihat lainnya</button>
+  </div>
+</section>
+<!--THEMES SECTION END-->
+
+<!--PRICE SECTION-->
+<section id="harga">
+  <h2>Pilihan Paket Undangan Website Kami</h2>
+  <p class="sub">Semua paket sudah termasuk seluruh tema yang kami punya, jadi kamu nggak perlu khawatir kalau mau ganti tema.</p>
+  <div class="cols plans">
+    <div class="box"><h3>Paket Basic</h3><div class="price">Rp 89.000</div>
+    <ul>
+      <li>Unlimited nama penerima</li>
+      <li>Maps langsung ke lokasi</li>
+      <li>Countdown hari</li>
+      <li>Konfirmasi kehadiran tamu</li>
+      <li>Foto mempelai / acara</li>
+      <li>10 foto galery</li>
+      <li>2 rekening titip hadiah</li>
+      <li>Kotak ucapan</li>
+      <li>Backsound music (semua database music)</li>
+      <li>Akses gratis seluruh tema</li>
+      <li>Tanpa masa aktif</li>
+    </ul>
+  </div>
+  <div class="box"><h3>Paket Standard</h3><div class="price">Rp 119.000</div>
+    <ul>
+      <li>Unlimited nama penerima</li>
+      <li>Maps langsung ke lokasi</li>
+      <li>Countdown hari</li>
+      <li>Konfirmasi kehadiran tamu</li>
+      <li>Foto mempelai / acara</li>
+      <li>15 foto galery</li>
+      <li>4 rekening titip hadiah</li>
+      <li>Kotak ucapan</li>
+      <li>QRCode buku tamu otomatis</li>
+      <li>Auto scroll (slide otomatis)</li>
+      <li>Ganti jenis font</li>
+      <li>Backsound music (semua database music)</li>
+      <li>Akses gratis seluruh tema</li>
+      <li>Tanpa masa aktif</li>
+    </ul>
+  </div>
+   <div class="box"><h3>Paket Premium</h3><div class="price">Rp 139.000</div>
+    <ul>
+      <li>Unlimited nama penerima</li>
+      <li>Maps langsung ke lokasi</li>
+      <li>Countdown hari</li>
+      <li>Konfirmasi kehadiran tamu</li>
+      <li>Foto mempelai / acara</li>
+      <li>20 foto galery [HD]</li>
+      <li>Max Upload Foto 5MB [HD]</li>
+      <li>Auto scroll (slide otomatis)</li>
+      <li>Ganti atau request jenis font</li>
+      <li>Video / Live Youtube</li>
+      <li>6 Rekening Titip Hadiah</li>
+      <li>Notifikasi kehadiran realtime whatsapp</li>
+      <li>Kotak ucapan</li>
+      <li>Embed maps (Denah google maps)</li>
+      <li>QRCode buku tamu otomatis</li>
+      <li>Backsound music (semua pilihan)</li>
+      <li>Request custom music</li>
+      <li>Akses gratis seluruh tema</li>
+      <li>Tanpa masa aktif</li>
+      <li>Love story</li>
+      <li>Susunan Acara</li>
+      <li>Sebar WhatsApp otomatis</li>
+      <li>Balas ucapan di undangan</li>
+    </ul>
+  </div>
+  </div>
+</section>
+<!--PRICE SECTION END-->
+
+<!--CARA PESAN SECTION-->
+<section id="cara">
+  <h2>Cara Memesan Undangan Digital di Kami</h2>
+  <p class="sub">Cukup gampang memesan undangan digital di kami tanpa ribet.</p>
+  <ol class="steps">
+    <li><b>Pilih Tema & Paket</b><span>Pilih Tema & Paket yang paling sesuai dengan gaya kamu.</span></li>
+    <li><b>Selesaikan Pembayaran</b><span>Selesaikan pembayaran untuk mengaktifkan undangan kamu.</span></li>
+    <li><b>Undangan Aktif</b><span>Undangan kamu bisa revisi dan ganti tema sampai hari H.</span></li>
+    <li><b>Bagikan ke tamu</b><span>Bagikan undangan digital kamu tanpa batas maksimal.</span></li>
+  </ol>
+</section>
+<!--CARA PESAN SECTION END-->
+
+<!--TESTIMONI SECTION--
+<section id="testimoni">
+  <h2>Testimoni dari teman kita</h2>
+  <p class="sub">Apa kata mereka tentang pengalaman memesan undangan digital di kami.</p>
+  <div class="testi" id="testi"></div>
+</section>
+TESTIMONI SECTION END-->
+
+<!--FAQ SECTION-->
+<section id="faq">
+  <h2>Pertanyaan yang sering diajukan</h2>
+  <details><summary>Berapa lama undangan bisa diakses tamu?</summary>
+    <p>Tanpa batas waktu, undangan kamu akan tetap aktif dan tamu tetap bisa membuka undangan setelah hari acara.</p></details>
+  <details><summary>Apakah tema bisa diganti setelah memesan?</summary>
+    <p>Bisa, kamu bebas ganti tema yang kamu suka setelah memesan.</p></details>
+  <details><summary>Bagaimana tamu memberi hadiah pernikahan?</summary>
+    <p>Lewat amplop digital yang ditampilkan di undangan kamu.</p></details>
+</section>
+<!--FAQ SECTION END-->
+
+<!--CARD FOOTER SECTION-->
+<section>
+  <div class="end">
+    <h2 style="margin:0 auto 20px">Siap merayakan kisah kalian bersama kami?</h2>
+  <a class="btn" data-wa="Halo Kak, aku mau buat undangan pernikahan." href="#" ><i class="bi bi-whatsapp" style="margin-right: 3px;"></i>Chat WhatsApp Sekarang</a>
+</div>
+</section>
+<!--CARD FOOTER SECTION END-->
+
+</main>
+
+<!--FOOTER SECTION-->
+<footer class="f">
+  <div class="wrap fgrid">
+    <div class="fbrand">
+      <a class="logo" href="#"><img src="img/logo.png" alt="Moment Kita" style="height: 25px; width: auto; display: block;"></a>
+      <p>Untuk kisah yang akan selalu dikenang. Kami menciptakan undangan dengan sentuhan elegan dan personal, untuk mengiringi langkah menuju hari yang istimewa.</p>
+      <div class="soc" id="soc"></div>
+    </div>
+    <div>
+      <h4>Menu</h4>
+      <ul>
+        <li>
+          <a href="#tema">Tema</a>
+        </li>
+        <li>
+          <a href="#harga">Harga</a>
+        </li>
+        <li>
+          <a href="#cara">Cara order</a>
+        </li>
+        <!--
+        <li>
+          <a href="#testimoni">Testimoni</a>
+        </li>
+        -->
+        <li>
+          <a href="#faq">FAQ</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h4>Hubungi kami</h4>
+      <ul>
+        <li>WhatsApp<br><a data-wa="Halo Kak, aku mau tanya soal undangan digital." data-cfg="waTampil" href="#"></a></li>
+        <li>Email<br><a data-mail data-cfg="email" href="#"></a></li>
+        <li>Alamat<br><span data-cfg="alamat"></span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fline">
+    <div class="wrap fbot">
+    <span data-cfg="copy"></span>
+  </div>
+</div> 
+</footer>
+<!--FOOTER SECTION END-->
+
+<script src="script.js"></script>
+</body>
+</html>

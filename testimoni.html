@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/img/icon.png">
+<title>Tulis Testimoni – Moment Kita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.formwrap{max-width:640px;margin:0 auto;padding:48px 0 64px}
+.formwrap h1{font:italic 500 clamp(30px,6vw,42px)/1.1 "Cormorant Garamond",Georgia,serif;margin:0 0 8px}
+.field{margin-bottom:20px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.field input,.field textarea{width:100%;font:inherit;font-size:15px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.field textarea{resize:vertical;min-height:100px}
+.field input:focus,.field textarea:focus{outline:3px solid var(--acc);outline-offset:1px}
+.rate{display:flex;gap:6px}
+.rate button{background:none;border:0;font-size:30px;line-height:1;cursor:pointer;color:var(--line);padding:2px}
+.rate button.on{color:#E5A93C}
+.rate button:focus-visible{outline:3px solid var(--acc);outline-offset:3px;border-radius:6px}
+.preview-lbl{font-size:13px;color:var(--mute);margin:28px 0 10px}
+.hint{font-size:13px;color:var(--mute);margin-top:6px}
+.formwrap .btn{border:0;font:inherit;font-size:15px;cursor:pointer;width:100%}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--mute);text-decoration:none;font-size:14px;margin-bottom:20px}
+</style>
+</head>
+<body>
+
+<!--NAVBAR SECTION-->
+<header>
+  <div class="wrap">
+     <a class="logo" href="#"><img src="img/logo.png" alt="Moment Kita"></a>
+  </div>
+</header>
+<!--NAVBAR SECTION END-->
+
+<main class="wrap">
+
+<!--TEKS ATAS SECTION-->
+<div class="formwrap">
+  <h1>Ceritakan pengalamanmu</h1>
+  <p class="sub">Testimoni kamu bakal dikirim ke kami dan akan tampil di halaman utama.</p>
+<!--TEKS ATAS SECTION END-->
+
+<!--FORM SECTION-->
+  <form id="tf">
+    <div class="field">
+      <label for="nama">Nama</label>
+      <input id="nama" type="text" placeholder="Contoh: Rahmat & Dina" required>
+    </div>
+    <div class="field">
+      <label for="kota">Kota</label>
+      <input id="kota" type="text" placeholder="Contoh: Yogyakarta" required>
+    </div>
+    <div class="field">
+      <label>Rating</label>
+      <div class="rate" id="rate" role="radiogroup" aria-label="Beri rating 1 sampai 5 bintang"></div>
+    </div>
+    <div class="field">
+      <label for="isi">Testimoni</label>
+      <textarea id="isi" placeholder="Ceritakan pengalamanmu memesan undangan di Moment Kita..." required></textarea>
+    </div>
+
+    <p class="preview-lbl">Pratinjau kartu testimonimu</p>
+    <div class="testi" style="grid-template-columns:1fr"><article class="tc" id="prev"></article></div>
+<!--FORM SECTION END-->
+
+  <div class="field" style="margin-top:24px"></div>
+<!--BUTTON SEND SECTION-->
+      <button class="btn" type="submit"><i class="bi bi-send" style="margin-right:6px"></i>Kirim Testimoni</button>
+<!--BUTTON SEND SECTION END-->
+
+<!--TEKS AKHIR SECTION-->
+      <p class="hint">Setelah diklik, WhatsApp akan terbuka dengan pesan yang sudah terisi otomatis. Tinggal kirim ke kami.</p>
+<!--TEKS AKHIR SECTION END-->
+    </div>
+  </form>
+
+</div>
+</main>
+<script src="script.js"></script>
+<script>
+var nama=document.getElementById("nama"),kota=document.getElementById("kota"),isi=document.getElementById("isi");
+var rateBox=document.getElementById("rate"),prev=document.getElementById("prev");
+var bintang=5;
+function drawStars(){
+  rateBox.innerHTML="";
+  for(var i=1;i<=5;i++){
+    var b=document.createElement("button");
+    b.type="button";b.textContent="\u2605";b.setAttribute("data-v",i);
+    b.setAttribute("role","radio");b.setAttribute("aria-checked",i===bintang);
+    b.setAttribute("aria-label",i+" dari 5 bintang");
+    if(i<=bintang)b.className="on";
+    b.addEventListener("click",function(){bintang=+this.getAttribute("data-v");drawStars();drawPreview()});
+    rateBox.appendChild(b);
+  }
+}
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function drawPreview(){
+  var n=nama.value.trim()||"Nama Kamu",k=kota.value.trim()||"Kota · Tema",x=isi.value.trim()||"Testimonimu akan muncul di sini...";
+  var av=n.charAt(0).toUpperCase()||"?";
+  prev.innerHTML='<div class="stars">'+"\u2605".repeat(bintang)+"\u2606".repeat(5-bintang)+'</div><p>'+esc(x)+'</p><div class="who"><div class="av">'+esc(av)+'</div><div><b>'+esc(n)+'</b><span>'+esc(k)+'</span></div></div>';
+}
+[nama,kota,isi].forEach(function(el){el.addEventListener("input",drawPreview)});
+drawStars();drawPreview();
+
+var formEl=document.getElementById("tf"),submitBtn=formEl.querySelector("button[type=submit]");
+formEl.addEventListener("submit",function(e){
+  e.preventDefault();
+  if(!nama.value.trim()||!kota.value.trim()||!isi.value.trim())return;
+  var data={nama:nama.value.trim(),kota:kota.value.trim(),bintang:bintang,isi:isi.value.trim()};
+  function bukaWA(){
+    var msg="Halo "+CONFIG.brand+", aku baru kirim testimoni ya.\n\n"
+      +"Nama: "+data.nama+"\n"
+      +"Kota/Tema: "+data.kota+"\n"
+      +"Rating: "+data.bintang+"/5";
+    window.open(wa(msg),"_blank","noopener");
+  }
+  if(CONFIG.sheetUrl){
+    submitBtn.disabled=true;submitBtn.textContent="Mengirim...";
+    var fd=new FormData();
+    Object.keys(data).forEach(function(k){fd.append(k,data[k])});
+    fetch(CONFIG.sheetUrl,{method:"POST",body:fd,mode:"no-cors"})
+      .then(function(){bukaWA()})
+      .catch(function(){bukaWA()})
+      .finally(function(){submitBtn.disabled=false;submitBtn.innerHTML='<i class="bi bi-whatsapp" style="margin-right:6px"></i>Kirim testimoni'});
+  } else {
+    bukaWA();
+  }
+});
+</script>
+</body>
+</html>
