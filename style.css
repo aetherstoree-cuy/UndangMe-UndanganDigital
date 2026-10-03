@@ -42,23 +42,12 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .logo img{height:55px;width:auto;display:block;transition:height .25s ease}
 
 /* ---------- 2. NAVBAR ----------
-   Navbar ngambang: transparan + blur, bentuk pil, ada jarak dari
-   tepi atas layar (lihat "margin"). Tinggi navbar: header .wrap. */
+   Navbar simpel/biasa: nempel di atas konten (bukan ngambang, bukan
+   transparan/blur), ikut scroll normal kayak bagian halaman lainnya. */
 header{
   position:relative;z-index:5;
-  margin:calc(env(safe-area-inset-top,0px) + 14px) auto 0;
-  width:min(960px,calc(100% - 24px));
-  background:color-mix(in srgb,var(--bg) 70%,transparent);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid color-mix(in srgb,var(--line) 60%,transparent);
-  border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.12);
-  /* Fix: tanpa ini, blur transparan di atas kadang "nyangkut"/ga ke-refresh
-     pas discroll di sebagian browser (keliatannya kayak diem, padahal
-     position-nya udah relative/ikut normal). Baris ini maksa browser
-     bikin layer renderingnya sendiri biar selalu ke-gambar ulang tiap scroll. */
-  transform:translateZ(0);
-  will-change:transform;
-  backface-visibility:hidden
+  background:var(--bg);
+  border-bottom:1px solid var(--line)
 }
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 20px}
 header .logo img{height:20px}
