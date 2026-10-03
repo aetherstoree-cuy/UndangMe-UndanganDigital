@@ -3,7 +3,7 @@ var CONFIG={
   brand:"UndangMe",
   wa:"6283179381307",          // nomor WhatsApp: format 62, tanpa + dan tanpa 0 di depan
   waTampil:"0831-7938-1307",   // nomor yang ditampilkan di footer
-  email:"halo@domainmu.com",
+  email:"bisnis.undangme@gmail.com~",
   alamat:"Indramayu, Jawa Barat, Indonesia",
   instagram:"",   // link Instagram, contoh https://instagram.com/namamu (kosong = tidak tampil)
   tiktok:"",      // link TikTok (kosong = tidak tampil)

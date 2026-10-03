@@ -22,13 +22,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17111C;--card:#221A29;--ink:#F3EAF1;--mute:#B4A5BC;--acc:#E38AB0;--acc-ink:#2A0F1C;--line:#3A2E43}}
 :root[data-theme="dark"]{--bg:#17111C;--card:#221A29;--ink:#F3EAF1;--mute:#B4A5BC;--acc:#E38AB0;--acc-ink:#2A0F1C;--line:#3A2E43}
 
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth;
-  /* Fix: tanpa ini, browser suka "narik balik" posisi scroll ke atas tiap kali
-     tinggi <h1> berubah (karena animasi ngetik ganti teks tiap 60ms, bikin
-     jumlah barisnya berubah-ubah). Efeknya jadi kerasa kayak bagian atas
-     halaman (navbar) "nempel"/ga mau ke-scroll padahal bukan soal position. */
-  overflow-anchor:none
-}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Plus Jakarta Sans",system-ui,sans-serif}
 a{color:inherit}
@@ -42,17 +36,22 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .logo img{height:55px;width:auto;display:block;transition:height .25s ease}
 
 /* ---------- 2. NAVBAR ----------
-   Navbar simpel/biasa: nempel di atas konten (bukan ngambang, bukan
-   transparan/blur), ikut scroll normal kayak bagian halaman lainnya. */
+   Navbar ngambang: transparan + blur, bentuk pil, ada jarak dari
+   tepi atas layar (lihat "margin"). Tinggi navbar: header .wrap. */
 header{
-  position:relative;z-index:5;
-  background:var(--bg);
-  border-bottom:1px solid var(--line)
+  position:sticky;z-index:50;
+  top:calc(env(safe-area-inset-top,0px) + 14px);
+  margin:calc(env(safe-area-inset-top,0px) + 14px) auto 0;
+  width:min(960px,calc(100% - 24px));
+  background:color-mix(in srgb,var(--bg) 70%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid color-mix(in srgb,var(--line) 60%,transparent);
+  border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.12)
 }
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 20px}
 header .logo img{height:20px}
 header .burger{padding:8px}
-
+ 
 nav{display:flex;gap:16px;overflow-x:auto}
 nav a{text-decoration:none;color:var(--mute);font-size:14px;white-space:nowrap}
 
@@ -100,10 +99,6 @@ nav a{text-decoration:none;color:var(--mute);font-size:14px;white-space:nowrap}
 @media(min-width:800px){.hero{grid-template-columns:1fr}}
 
 h1{font:italic 500 clamp(38px,7vw,64px)/1.05 "Cormorant Garamond",Georgia,serif;margin:0 0 16px}
-/* Kasih tinggi minimum ke judul hero khusus (2 baris) biar pas animasi
-   ngetik lagi jalan, tinggi h1-nya ga naik-turun (ini yang bikin browser
-   "narik balik" scroll ke atas tiap ukurannya berubah) */
-.hero h1{min-height:calc(1.05em * 2)}
 .hero p{color:var(--mute);max-width:48ch;margin:0 0 24px}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 
