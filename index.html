@@ -16,25 +16,30 @@
 <header>
   <div class="wrap">
     <a class="logo" href="/"><img src="img/logo.png" alt="Moment Kita"></a>
-    <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
-      <span>
-      </span>
-      <span>
-      </span>
-      <span>
-      </span>
-    </button>
     <nav id="nav">
       <a href="#tema">Tema</a>
       <a href="#harga">Harga</a>
       <a href="#cara">Cara order</a>
 
       <!--
-       <a href="#testimoni">Testimoni</a> 
+       <a href="#testimoni">Testimoni</a>
        -->
 
       <a href="#faq">FAQ</a>
     </nav>
+    <div class="navRight">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ganti mode terang/gelap">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+      <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
+        <span>
+        </span>
+        <span>
+        </span>
+        <span>
+        </span>
+      </button>
+    </div>
   </div>
 </header>
 <!--NAVBAR END-->
@@ -187,12 +192,14 @@ TESTIMONI SECTION END-->
 <!--FAQ SECTION-->
 <section id="faq">
   <h2>Pertanyaan yang sering diajukan</h2>
-  <details><summary>Berapa lama undangan bisa diakses tamu?</summary>
-    <p>Tanpa batas waktu, undangan kamu akan tetap aktif dan tamu tetap bisa membuka undangan setelah hari acara.</p></details>
-  <details><summary>Apakah tema bisa diganti setelah memesan?</summary>
-    <p>Bisa, kamu bebas ganti tema yang kamu suka setelah memesan.</p></details>
-  <details><summary>Bagaimana tamu memberi hadiah pernikahan?</summary>
-    <p>Lewat amplop digital yang ditampilkan di undangan kamu.</p></details>
+  <div class="faqlist">
+    <details><summary>Berapa lama undangan bisa diakses tamu?<i class="bi bi-chevron-down faq-ic"></i></summary>
+      <p>Tanpa batas waktu, undangan kamu akan tetap aktif dan tamu tetap bisa membuka undangan setelah hari acara.</p></details>
+    <details><summary>Apakah tema bisa diganti setelah memesan?<i class="bi bi-chevron-down faq-ic"></i></summary>
+      <p>Bisa, kamu bebas ganti tema yang kamu suka setelah memesan.</p></details>
+    <details><summary>Bagaimana tamu memberi hadiah pernikahan?<i class="bi bi-chevron-down faq-ic"></i></summary>
+      <p>Lewat amplop digital yang ditampilkan di undangan kamu.</p></details>
+  </div>
 </section>
 <!--FAQ SECTION END-->
 

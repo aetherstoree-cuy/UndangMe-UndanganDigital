@@ -189,18 +189,23 @@ document.querySelectorAll("[data-cfg]").forEach(function(el){el.textContent=cfg[
 document.querySelectorAll("[data-mail]").forEach(function(a){a.href="mailto:"+CONFIG.email});
 var socEl=document.getElementById("soc");if(socEl){socEl.innerHTML=[["Instagram",CONFIG.instagram],["TikTok",CONFIG.tiktok]].filter(function(s){return s[1]}).map(function(s){return '<a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a>'}).join("")}
 document.title=CONFIG.brand+" \u2013 Undangan Digital";
-var cats=["Semua","Terpopuler","Rekomendasi","Tanpa Foto","Elegan","Undangan 3D","Flower","Islami"],cur="Semua",chips=document.getElementById("chips"),grid=document.getElementById("grid"),moreBtn=document.getElementById("moreThemes"),expanded=false;
+var cats=["Semua","Terpopuler","Rekomendasi","Tanpa Foto","Elegan","Undangan 3D","Flower","Islami"],cur="Semua",chips=document.getElementById("chips"),grid=document.getElementById("grid"),moreBtn=document.getElementById("moreThemes");
+/* AWAL  = jumlah tema yang tampil pertama kali (kategori "Semua")
+   TAMBAH = jumlah tema TAMBAHAN yang muncul tiap kali tombol
+            "Lihat lainnya" dipencet (bukan langsung nampilin semua).
+   Ganti angkanya di sini kalau mau atur berapa banyak nambahnya. */
+var AWAL=8,TAMBAH=8,jumlahTampil=AWAL;
 function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
 function fallback(t){return '<div class="cp" style="background:linear-gradient(160deg,'+t.c1+','+t.c2+');color:'+t.t+'"><small>The Wedding of</small><b>Alif &amp; Kirana</b><i>12 September 2026</i><span>Buka undangan</span></div>'}
 function render(){
 chips.innerHTML=cats.map(function(c){return '<button class="chip" aria-pressed="'+(c===cur)+'" data-c="'+c+'">'+c+'</button>'}).join("");
-var list=THEMES.filter(function(t){return cur==="Semua"||t.k===cur});
-var AWAL=8,showBtn=false;
-if(cur==="Semua"&&list.length>AWAL){
+var semua=THEMES.filter(function(t){return cur==="Semua"||t.k===cur});
+var list=semua,showBtn=false,semuaSudahTampil=jumlahTampil>=semua.length;
+if(cur==="Semua"&&semua.length>AWAL){
   showBtn=true;
-  if(!expanded){list=list.slice(0,AWAL)}
+  if(!semuaSudahTampil){list=semua.slice(0,jumlahTampil)}
 }
-if(moreBtn)moreBtn.innerHTML=expanded
+if(moreBtn)moreBtn.innerHTML=semuaSudahTampil
   ?'Lihat lebih sedikit<i class="bi bi-chevron-up" style="margin-left:6px"></i>'
   :'Lihat lainnya<i class="bi bi-chevron-down" style="margin-left:6px"></i>';
 grid.innerHTML=list.map(function(t){
@@ -209,8 +214,12 @@ var pv='<div class="shot" data-i="'+i+'"><img loading="lazy" alt="Screenshot tem
 return '<article class="item">'+pv+'<h3>'+t.n+'</h3><p>'+t.d+'</p>'+'<div class="acts">'+'<a class="btn o'+(t.demo?'':' off')+'" href="'+(t.demo||"#")+'" target="_blank" rel="noopener"'+(t.demo?'':' aria-disabled="true" tabindex="-1"')+'><i class="bi bi-eye" style="margin-right: 5px;"></i>Preview</a>'+'<a class="btn" data-wa="Halo Kak, aku mau pesan undangan tema &quot;'+t.n+'&quot;." href="#">Pilih tema</a></div></article>'}).join("");
 if(moreBtn)moreBtn.hidden=!showBtn;
 bindWA()}
-chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){cur=b.getAttribute("data-c");expanded=false;render()}});
-if(moreBtn)moreBtn.addEventListener("click",function(){expanded=!expanded;render()});
+chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){cur=b.getAttribute("data-c");jumlahTampil=AWAL;render()}});
+if(moreBtn)moreBtn.addEventListener("click",function(){
+  var total=THEMES.filter(function(t){return cur==="Semua"||t.k===cur}).length;
+  if(jumlahTampil>=total){jumlahTampil=AWAL}else{jumlahTampil=Math.min(jumlahTampil+TAMBAH,total)}
+  render();
+});
 /* Gambar tidak ditemukan -> balik ke preview warna */
 grid.addEventListener("error",function(e){var im=e.target,b=im.closest&&im.closest(".shot");if(im.tagName==="IMG"&&b){b.outerHTML=fallback(THEMES[b.getAttribute("data-i")])}},true);
 render();
@@ -219,6 +228,33 @@ render();
 var burger=document.getElementById("burger"),nav=document.getElementById("nav");
 burger.addEventListener("click",function(){var o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o);burger.setAttribute("aria-label",o?"Tutup menu":"Buka menu")});
 nav.addEventListener("click",function(e){if(e.target.tagName==="A"){nav.classList.remove("open");burger.setAttribute("aria-expanded","false");burger.setAttribute("aria-label","Buka menu")}});
+
+/* ============ TOGGLE MODE TERANG/GELAP ============
+ Simpan pilihan user di localStorage (namakey "undangme-theme"), jadi
+ kalau dia balik lagi ke web ini, mode yang dipilih tetep kepake. */
+(function(){
+var tombol=document.getElementById("themeToggle");
+if(!tombol)return;
+function simpan(t){try{localStorage.setItem("undangme-theme",t)}catch(e){}}
+function ambilSimpanan(){try{return localStorage.getItem("undangme-theme")}catch(e){return null}}
+function gelapAktif(){
+  var attr=document.documentElement.getAttribute("data-theme");
+  if(attr)return attr==="dark";
+  return window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches;
+}
+function perbaruiIkon(){
+  tombol.innerHTML=gelapAktif()?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';
+}
+var simpanan=ambilSimpanan();
+if(simpanan)document.documentElement.setAttribute("data-theme",simpanan);
+perbaruiIkon();
+tombol.addEventListener("click",function(){
+  var modeBaru=gelapAktif()?"light":"dark";
+  document.documentElement.setAttribute("data-theme",modeBaru);
+  simpan(modeBaru);
+  perbaruiIkon();
+});
+})();
 
 /* ============ TESTIMONI (tambah/hapus/ubah di sini) ============
  nama = nama pemberi testimoni | info = kota / tema yang dipakai

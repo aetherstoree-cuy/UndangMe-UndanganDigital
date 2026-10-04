@@ -48,12 +48,26 @@ header{
   border:1px solid color-mix(in srgb,var(--line) 60%,transparent);
   border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.12)
 }
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 20px}
+/* Grid 3-kolom: logo di kiri, menu di tengah (kolom lentur di antara
+   logo dan toggle/hamburger), toggle+hamburger di kanan. */
+header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;height:66px;padding:0 20px}
 header .logo img{height:20px}
 header .burger{padding:8px}
- 
-nav{display:flex;gap:16px;overflow-x:auto}
-nav a{text-decoration:none;color:var(--mute);font-size:14px;white-space:nowrap}
+
+/* Menu Tema/Harga/dll ketengah secara horizontal di kolom tengah */
+nav{display:flex;gap:16px;overflow-x:auto;justify-self:center}
+nav a{text-decoration:none;color:var(--mute);font-size:14px;white-space:nowrap;transition:color .2s ease}
+nav a:hover{color:var(--acc)}
+
+/* Grup kanan: toggle dark/light + tombol hamburger, nempel sejajar */
+.navRight{display:flex;align-items:center;gap:4px;justify-self:end}
+.theme-toggle{
+  display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:999px;border:1px solid var(--line);
+  background:transparent;color:var(--ink);cursor:pointer;font-size:16px;
+  transition:background-color .2s ease,color .2s ease,transform .2s ease
+}
+.theme-toggle:hover{background:var(--line);transform:translateY(-1px)}
 
 /* Tombol hamburger (cuma kelihatan di HP, lihat bagian Mobile di bawah) */
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:10px;cursor:pointer}
@@ -210,10 +224,25 @@ h2{font:italic 500 clamp(30px,5vw,42px)/1.1 "Cormorant Garamond",Georgia,serif;m
 .who b{display:block;font-size:15px;line-height:1.3}
 .who span{font-size:13px;color:var(--mute)}
 
-/* ---------- 11. FAQ (section #faq, <details>/<summary>) ---------- */
-details{border-bottom:1px solid var(--line);padding:14px 0;max-width:720px}
-summary{font-weight:700;cursor:pointer}
-details p{color:var(--mute);margin:8px 0 0}
+/* ---------- 11. FAQ (section #faq, <details>/<summary>) ----------
+   Tiap pertanyaan jadi "kartu" sendiri (bukan cuma garis bawah polos):
+   ada border yang berubah warna + ikon panah yang muter pas dibuka. */
+.faqlist{display:grid;gap:12px;max-width:720px}
+.faqlist details{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:0;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease
+}
+.faqlist details[open]{border-color:var(--acc);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.faqlist summary{
+  list-style:none;cursor:pointer;font-weight:700;padding:18px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transition:color .2s ease
+}
+.faqlist summary::-webkit-details-marker{display:none}
+.faqlist summary:hover{color:var(--acc)}
+.faqlist .faq-ic{flex:none;color:var(--acc);transition:transform .25s ease}
+.faqlist details[open] .faq-ic{transform:rotate(180deg)}
+.faqlist details p{color:var(--mute);margin:0;padding:0 20px 18px}
 
 /* Dipakai juga di testimoni data (blockquote tidak lagi dipakai di
    markup saat ini, dibiarkan untuk jaga-jaga kalau dipakai lagi) */
@@ -221,8 +250,23 @@ blockquote{margin:0}
 blockquote p{margin:0 0 12px;font-style:italic}
 blockquote footer{border:0;padding:0;text-align:left;font-size:14px;color:var(--mute)}
 
-/* ---------- 12. CTA PENUTUP ("Siap merayakan kisah kalian?") ---------- */
-.end{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:40px 20px}
+/* ---------- 12. CTA PENUTUP ("Siap merayakan kisah kalian?") ----------
+   1 detail dekoratif: 2 lingkaran garis tipis transparan di pojok card
+   (kiri-atas & kanan-bawah), warna ngikut --acc tapi tipis banget (bukan
+   full-color card kayak referensi), biar tetep simpel/ga rame. */
+.end{
+  position:relative;overflow:hidden;
+  text-align:center;background:var(--card);border:1px solid var(--line);
+  border-radius:18px;padding:40px 20px
+}
+.end::before,.end::after{
+  content:"";position:absolute;border-radius:50%;
+  border:1.5px solid color-mix(in srgb,var(--acc) 30%,transparent);
+  pointer-events:none
+}
+.end::before{width:160px;height:160px;top:-60px;left:-50px}
+.end::after{width:200px;height:200px;bottom:-80px;right:-50px}
+.end h2,.end>a{position:relative;z-index:1}
 .end h2{margin-bottom:12px}
 
 /* ---------- 13. FOOTER ----------
@@ -261,6 +305,10 @@ footer.f .fbot{padding:18px 20px;gap:8px 24px;justify-content:center;text-align:
   .burger{display:flex}
   nav{
     display:none;position:absolute;top:calc(100% + 10px);left:12px;right:12px;
+    /* Reset justify-self:center (dipakai buat nge-tengahin menu di PC) --
+       tanpa ini, card dropdown-nya ikut mengecil/shrink ngikutin lebar
+       teks, bukan ngisi penuh sesuai left/right di atas. */
+    justify-self:stretch;
     flex-direction:column;gap:0;
     background:color-mix(in srgb,var(--bg) 96%,transparent);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
@@ -269,7 +317,7 @@ footer.f .fbot{padding:18px 20px;gap:8px 24px;justify-content:center;text-align:
     padding:6px 20px;overflow:visible
   }
   nav.open{display:flex}
-  nav a{padding:12px 0;font-size:16px;color:var(--ink);border-top:1px solid var(--line)}
+  nav a{padding:12px 0;font-size:16px;color:var(--ink);border-top:1px solid var(--line);text-align:center}
   nav a:first-child{border-top:0}
 }
 
