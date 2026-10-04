@@ -61,7 +61,7 @@ header{
      "header{...}" di atas, baris "width:min(960px,...)" -> ganti
      angka 960px-nya (misal 1100px buat lebih lebar). */
 header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;height:80px;padding:0 20px}
-header .logo img{height:26px}
+header .logo img{height:30px}
 header .burger{padding:8px}
 
 /* Menu Tema/Harga/dll ketengah secara horizontal di kolom tengah */
