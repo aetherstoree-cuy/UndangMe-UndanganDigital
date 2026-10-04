@@ -224,6 +224,20 @@ if(moreBtn)moreBtn.addEventListener("click",function(){
 grid.addEventListener("error",function(e){var im=e.target,b=im.closest&&im.closest(".shot");if(im.tagName==="IMG"&&b){b.outerHTML=fallback(THEMES[b.getAttribute("data-i")])}},true);
 render();
 
+/* ============ FAQ: cuma 1 yang bisa kebuka (accordion) ============
+ Pakai atribut HTML name="faq" di tiap <details> (browser modern otomatis
+ nutup yang lain). Baris di bawah ini cuma jaga-jaga buat browser lama
+ yang belum dukung atribut "name" di <details>. */
+document.querySelectorAll('#faq details').forEach(function(d){
+  d.addEventListener('toggle',function(){
+    if(d.open){
+      document.querySelectorAll('#faq details').forEach(function(lain){
+        if(lain!==d)lain.open=false;
+      });
+    }
+  });
+});
+
 /* Menu hamburger (HP) */
 var burger=document.getElementById("burger"),nav=document.getElementById("nav");
 burger.addEventListener("click",function(){var o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o);burger.setAttribute("aria-label",o?"Tutup menu":"Buka menu")});
@@ -242,17 +256,17 @@ function gelapAktif(){
   if(attr)return attr==="dark";
   return window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches;
 }
-function perbaruiIkon(){
-  tombol.innerHTML=gelapAktif()?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';
+function perbaruiTombol(){
+  tombol.setAttribute("aria-pressed",gelapAktif()?"true":"false");
 }
 var simpanan=ambilSimpanan();
 if(simpanan)document.documentElement.setAttribute("data-theme",simpanan);
-perbaruiIkon();
+perbaruiTombol();
 tombol.addEventListener("click",function(){
   var modeBaru=gelapAktif()?"light":"dark";
   document.documentElement.setAttribute("data-theme",modeBaru);
   simpan(modeBaru);
-  perbaruiIkon();
+  perbaruiTombol();
 });
 })();
 

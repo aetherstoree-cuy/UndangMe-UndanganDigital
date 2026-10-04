@@ -49,9 +49,19 @@ header{
   border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.12)
 }
 /* Grid 3-kolom: logo di kiri, menu di tengah (kolom lentur di antara
-   logo dan toggle/hamburger), toggle+hamburger di kanan. */
-header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;height:66px;padding:0 20px}
-header .logo img{height:20px}
+   logo dan toggle/hamburger), toggle+hamburger di kanan.
+
+   CARA BESARIN/KECILIN NAVBAR:
+   - "height:76px" di bawah ini = TINGGI navbar. Mau lebih gede/kecil,
+     ganti angka 76px-nya (misal 66px buat lebih kecil, 86px lebih gede).
+   - "header .logo img{height:...}" di bawah = ukuran LOGO di navbar.
+     Samain aja sama perasaan tinggi navbarnya (biasanya logo = tinggi
+     navbar dikurang 36-44px, biar ga mepet atas-bawah).
+   - Kalau mau lebih LEBAR (kiri-kanan, bukan tinggi), itu di bagian
+     "header{...}" di atas, baris "width:min(960px,...)" -> ganti
+     angka 960px-nya (misal 1100px buat lebih lebar). */
+header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;height:80px;padding:0 20px}
+header .logo img{height:26px}
 header .burger{padding:8px}
 
 /* Menu Tema/Harga/dll ketengah secara horizontal di kolom tengah */
@@ -60,14 +70,39 @@ nav a{text-decoration:none;color:var(--mute);font-size:14px;white-space:nowrap;t
 nav a:hover{color:var(--acc)}
 
 /* Grup kanan: toggle dark/light + tombol hamburger, nempel sejajar */
-.navRight{display:flex;align-items:center;gap:4px;justify-self:end}
+.navRight{display:flex;align-items:center;gap:10px;justify-self:end}
+
+/* Toggle mode terang/gelap: bentuk pil, ada bulatan ("thumb") yang geser
+   ke kanan pas mode gelap aktif, ikon matahari/bulan di kiri-kanan track.
+   Status aktif/nggaknya dibaca dari atribut aria-pressed (diatur di
+   script.js), bukan dari ganti-ganti innerHTML lagi. */
 .theme-toggle{
-  display:flex;align-items:center;justify-content:center;
-  width:38px;height:38px;border-radius:999px;border:1px solid var(--line);
-  background:transparent;color:var(--ink);cursor:pointer;font-size:16px;
-  transition:background-color .2s ease,color .2s ease,transform .2s ease
+  position:relative;flex:none;display:flex;align-items:center;
+  width:44px;height:24px;border-radius:999px;padding:0;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--line) 70%,transparent);cursor:pointer;
+  transition:background-color .25s ease
 }
-.theme-toggle:hover{background:var(--line);transform:translateY(-1px)}
+/* Ikon dibikin lebih gede & lebih kontras warnanya (kuning nyala buat
+   matahari, ungu-biru nyala buat bulan) biar lebih jelas kelihatan,
+   walau track togglenya kecil. */
+.theme-toggle i{
+  position:absolute;top:50%;transform:translateY(-50%);
+  font-size:13px;transition:opacity .25s ease
+}
+.theme-toggle .ic-sun{left:4px;color:#F5A623}
+.theme-toggle .ic-moon{right:4px;color:#8B7CF6}
+.theme-toggle .theme-thumb{
+  position:relative;z-index:1;width:18px;height:18px;margin-left:2px;
+  border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.25);
+  transition:transform .25s cubic-bezier(.4,0,.2,1)
+}
+.theme-toggle:hover .theme-thumb{box-shadow:0 2px 7px rgba(0,0,0,.35)}
+.theme-toggle[aria-pressed="true"]{background:var(--ink)}
+.theme-toggle[aria-pressed="true"] .theme-thumb{transform:translateX(20px)}
+/* Ikon yang sedang nggak aktif tetep agak pudar (bukan ketara banget),
+   tapi ikon yang aktif sekarang lebih terang/jelas dari sebelumnya. */
+.theme-toggle[aria-pressed="true"] .ic-sun{opacity:.55}
+.theme-toggle[aria-pressed="false"] .ic-moon{opacity:.6}
 
 /* Tombol hamburger (cuma kelihatan di HP, lihat bagian Mobile di bawah) */
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;padding:10px;cursor:pointer}
@@ -226,8 +261,10 @@ h2{font:italic 500 clamp(30px,5vw,42px)/1.1 "Cormorant Garamond",Georgia,serif;m
 
 /* ---------- 11. FAQ (section #faq, <details>/<summary>) ----------
    Tiap pertanyaan jadi "kartu" sendiri (bukan cuma garis bawah polos):
-   ada border yang berubah warna + ikon panah yang muter pas dibuka. */
-.faqlist{display:grid;gap:12px;max-width:720px}
+   ada border yang berubah warna + ikon panah yang muter pas dibuka.
+   Ga dikasih max-width lagi -> lebarnya ngikutin penuh container (.wrap),
+   ga cuma setengah layar di PC/laptop. */
+.faqlist{display:grid;gap:12px;margin-top:28px}
 .faqlist details{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
   padding:0;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease
