@@ -214,15 +214,22 @@ var pv='<div class="shot" data-i="'+i+'"><img loading="lazy" alt="Screenshot tem
 return '<article class="item">'+pv+'<h3>'+t.n+'</h3><p>'+t.d+'</p>'+'<div class="acts">'+'<a class="btn o'+(t.demo?'':' off')+'" href="'+(t.demo||"#")+'" target="_blank" rel="noopener"'+(t.demo?'':' aria-disabled="true" tabindex="-1"')+'><i class="bi bi-eye" style="margin-right: 5px;"></i>Preview</a>'+'<a class="btn" data-wa="Halo Kak, aku mau pesan undangan tema &quot;'+t.n+'&quot;." href="#">Pilih tema</a></div></article>'}).join("");
 if(moreBtn)moreBtn.hidden=!showBtn;
 bindWA()}
-chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){cur=b.getAttribute("data-c");jumlahTampil=AWAL;render()}});
-if(moreBtn)moreBtn.addEventListener("click",function(){
-  var total=THEMES.filter(function(t){return cur==="Semua"||t.k===cur}).length;
-  if(jumlahTampil>=total){jumlahTampil=AWAL}else{jumlahTampil=Math.min(jumlahTampil+TAMBAH,total)}
+/* Bagian tema (chips/grid) cuma ada di halaman utama (index.html).
+   Di halaman lain (misal testimoni.html) elemen ini gak ada -> kalau
+   dipaksa jalan bakal error dan bikin SISA script.js di bawah (menu
+   hamburger, toggle dark/light mode, dll) ikut berhenti kebaca.
+   Makanya dibungkus "if(chips&&grid)" biar cuma jalan kalau memang ada. */
+if(chips&&grid){
+  chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){cur=b.getAttribute("data-c");jumlahTampil=AWAL;render()}});
+  if(moreBtn)moreBtn.addEventListener("click",function(){
+    var total=THEMES.filter(function(t){return cur==="Semua"||t.k===cur}).length;
+    if(jumlahTampil>=total){jumlahTampil=AWAL}else{jumlahTampil=Math.min(jumlahTampil+TAMBAH,total)}
+    render();
+  });
+  /* Gambar tidak ditemukan -> balik ke preview warna */
+  grid.addEventListener("error",function(e){var im=e.target,b=im.closest&&im.closest(".shot");if(im.tagName==="IMG"&&b){b.outerHTML=fallback(THEMES[b.getAttribute("data-i")])}},true);
   render();
-});
-/* Gambar tidak ditemukan -> balik ke preview warna */
-grid.addEventListener("error",function(e){var im=e.target,b=im.closest&&im.closest(".shot");if(im.tagName==="IMG"&&b){b.outerHTML=fallback(THEMES[b.getAttribute("data-i")])}},true);
-render();
+}
 
 /* ============ FAQ: cuma 1 yang bisa kebuka (accordion) ============
  Pakai atribut HTML name="faq" di tiap <details> (browser modern otomatis
@@ -238,10 +245,15 @@ document.querySelectorAll('#faq details').forEach(function(d){
   });
 });
 
-/* Menu hamburger (HP) */
+/* Menu hamburger (HP) -- dibungkus "if(burger&&nav)" soalnya di halaman
+   yang menu navbar-nya dihapus (misal testimoni.html), elemen #burger
+   dan #nav ini emang sengaja gak ada -> tanpa pengaman ini, script bakal
+   error dan bikin sisa kode di bawah (toggle dark/light mode) ikut mati. */
 var burger=document.getElementById("burger"),nav=document.getElementById("nav");
-burger.addEventListener("click",function(){var o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o);burger.setAttribute("aria-label",o?"Tutup menu":"Buka menu")});
-nav.addEventListener("click",function(e){if(e.target.tagName==="A"){nav.classList.remove("open");burger.setAttribute("aria-expanded","false");burger.setAttribute("aria-label","Buka menu")}});
+if(burger&&nav){
+  burger.addEventListener("click",function(){var o=nav.classList.toggle("open");burger.setAttribute("aria-expanded",o);burger.setAttribute("aria-label",o?"Tutup menu":"Buka menu")});
+  nav.addEventListener("click",function(e){if(e.target.tagName==="A"){nav.classList.remove("open");burger.setAttribute("aria-expanded","false");burger.setAttribute("aria-label","Buka menu")}});
+}
 
 /* ============ TOGGLE MODE TERANG/GELAP ============
  Simpan pilihan user di localStorage (namakey "undangme-theme"), jadi
